@@ -8,16 +8,16 @@ import {
   CarouselNext,
   CarouselPrevious,
 } from "@/components/ui/carousel";
-import CustomCard from "./popular/card";
+import CustomCard from "./carousel-card";
 import { Card } from "@/components/ui/card";
-import { CardProps } from "@/types";
+import { UserBookProps } from "@/types";
 
 interface CarouselMainProps {
-  cardData: CardProps[];
+  cardData: UserBookProps[];
 }
 
 export function CarouselMain({cardData}:CarouselMainProps) {
-  const [sortedArray, setSortedArray] = useState<CardProps[] | null>(null);
+  const [sortedArray, setSortedArray] = useState<UserBookProps[] | null>(null);
 
   const SortViews = (): void => {
     const sorted = cardData.sort((a, b) => a.views - b.views);
@@ -44,9 +44,12 @@ export function CarouselMain({cardData}:CarouselMainProps) {
           : sortedArray.map((card, index) => (
               <CarouselItem key={index} className="md:basis-1/3 lg:basis-1/6">
                 <CustomCard
+                  tags={card.tags}
+                  favorites={card.favorites}
+                  author={card.author}
+                  preface={card.preface}
                   title={card.title}
-                  subtitle={card.subtitle}
-                  categories={card.categories}
+                  category={card.category}
                   views={card.views}
                 />
               </CarouselItem>

@@ -1,9 +1,9 @@
 import React from "react";
-import { CarouselMain } from "./carousel-main";
-import { CardProps } from "@/types";
+import { CarouselMain } from "./carousel";
+import { UserBookProps } from "@/types";
 
 interface seciontProps {
-  array: CardProps[];
+  array: UserBookProps[];
   section_title: string;
 }
 
