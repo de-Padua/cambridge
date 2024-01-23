@@ -16,16 +16,16 @@ import {
 import { Button } from "../ui/button";
 
 const bookCategories: { title: string; href: string }[] = [
-  { title: "Fiction", href: "/categories/fiction" },
-  { title: "Mystery & Thriller", href: "/categories/mystery-thriller" },
-  { title: "Science Fiction & Fantasy", href: "/categories/sci-fi-fantasy" },
-  { title: "Romance", href: "/categories/romance" },
-  { title: "Non-Fiction", href: "/categories/non-fiction" },
-  { title: "Biography & Memoir", href: "/categories/biography-memoir" },
-  { title: "History", href: "/categories/history" },
-  { title: "Self-Help", href: "/categories/self-help" },
-  { title: "Science & Nature", href: "/categories/science-nature" },
-  { title: "Cooking & Culinary Arts", href: "/categories/cooking" },
+  { title: "Fiction", href: "/category/fiction" },
+  { title: "Mystery & Thriller", href: "/category/mystery-thriller" },
+  { title: "Science Fiction & Fantasy", href: "/category/sci-fi-fantasy" },
+  { title: "Romance", href: "/category/romance" },
+  { title: "Non-Fiction", href: "/category/non-fiction" },
+  { title: "Biography & Memoir", href: "/category/biography-memoir" },
+  { title: "History", href: "/category/history" },
+  { title: "Self-Help", href: "/category/self-help" },
+  { title: "Science & Nature", href: "/category/science-nature" },
+  { title: "Cooking & Culinary Arts", href: "/category/cooking" },
 ];
 
 export function NavMenu() {
@@ -68,7 +68,9 @@ export function NavMenu() {
           <NavigationMenuContent>
             <ul className="grid w-[400px] gap-3 p-4 md:w-[500px] md:grid-cols-2  ">
               {bookCategories.map((bookCategorie) => (
-                <ListItem key={bookCategorie.title}>{bookCategorie.title}</ListItem>
+               
+                  <Link href={bookCategorie.href}> <ListItem key={bookCategorie.title}>{bookCategorie.title} </ListItem></Link>
+               
               ))}
             </ul>
           </NavigationMenuContent>
