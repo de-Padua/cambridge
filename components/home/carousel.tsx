@@ -8,7 +8,7 @@ import {
   CarouselNext,
   CarouselPrevious,
 } from "@/components/ui/carousel";
-import CustomCard from "./carousel-card";
+import CustomCard from "./card";
 import { Card } from "@/components/ui/card";
 import { UserBookProps } from "@/types";
 
@@ -42,8 +42,12 @@ export function CarouselMain({cardData}:CarouselMainProps) {
         {sortedArray === null
           ? "Loading.."
           : sortedArray.map((card, index) => (
-              <CarouselItem key={index} className="md:basis-1/3 lg:basis-1/6">
+              <CarouselItem key={index} className="md:basis-1/3 lg:basis-1/2 w-full">
                 <CustomCard
+                 sinopisis={card.sinopisis}
+                 chapters={card.chapters}
+                 typeOfBook={card.typeOfBook}
+                 createdAt={card.createdAt}
                   tags={card.tags}
                   favorites={card.favorites}
                   author={card.author}

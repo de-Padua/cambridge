@@ -23,6 +23,7 @@ import {
 import { Button } from "../ui/button";
 import { Separator } from "@radix-ui/react-dropdown-menu";
 import { ScrollArea } from "@/components/ui/scroll-area";
+import Link from "next/link";
 
 function CarouselCard({
   title,
@@ -31,14 +32,15 @@ function CarouselCard({
   category,
   views,
   tags,
-  favorites
+  favorites,
+  sinopisis
 }: UserBookProps) {
   const [open, setOpen] = useState<boolean>(false);
 
   return (
     <div>
       <Card
-        className="border-none shadow-none cursor-pointer hover:bg-accent transition-all rounded-sm p-2"
+        className="border-none shadow-none cursor-pointer hover:bg-accent transition-all rounded-sm p-2 "
         onClick={() => {
           setOpen((oldValue) => !oldValue);
         }}
@@ -100,7 +102,7 @@ function CarouselCard({
                   </div>
                   <div className="f">
                     <Badge className="">
-                      {views}
+                      {}
                       <EyeOpenIcon className=" ml-1" />
                     </Badge>
                   </div>
@@ -123,13 +125,15 @@ function CarouselCard({
               <div>
                 <ScrollArea className="h-[340px] shadow-sm w-full rounded-md py-5 
                  ">
-                  <p className="text-sm">{preface}</p>
+                  <p className="text-sm">{sinopisis}</p>
                 </ScrollArea>
               </div>
               <div className="flex items-center justify-start justify-self-end">
+                <Link href={`/book/${title}`}>
                 <Button className="mr-1">
                   <EnterIcon className="mr-2" /> Read history
                 </Button>{" "}
+                </Link>
               
               </div>
             </div>
