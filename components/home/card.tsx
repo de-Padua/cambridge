@@ -33,7 +33,7 @@ function CarouselCard({
   views,
   tags,
   favorites,
-  sinopisis
+  synopisis
 }: UserBookProps) {
   const [open, setOpen] = useState<boolean>(false);
 
@@ -102,7 +102,7 @@ function CarouselCard({
                   </div>
                   <div className="f">
                     <Badge className="">
-                      {}
+                      {views}
                       <EyeOpenIcon className=" ml-1" />
                     </Badge>
                   </div>
@@ -125,7 +125,7 @@ function CarouselCard({
               <div>
                 <ScrollArea className="h-[340px] shadow-sm w-full rounded-md py-5 
                  ">
-                  <p className="text-sm">{sinopisis}</p>
+                  <p className="text-sm">{synopisis}</p>
                 </ScrollArea>
               </div>
               <div className="flex items-center justify-start justify-self-end">

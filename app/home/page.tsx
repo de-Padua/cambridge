@@ -9,6 +9,7 @@ import Section from "@/components/home/section";
 
 function page() {
   const whimsicalJourneyBook: UserBookProps[] = [{
+    finished:false,
     title: "The Whimsical Journey of Oliver",
     author: "Your Name",
     category: { title: "Fantasy", id: "fantasy123" },
@@ -40,7 +41,7 @@ function page() {
         `,
       },
     ],
-    sinopisis: "Join Oliver on a whimsical journey through meadows, libraries, and enchanted realms as he discovers the magic woven into the fabric of his town.",
+    synopisis: "Join Oliver on a whimsical journey through meadows, libraries, and enchanted realms as he discovers the magic woven into the fabric of his town.",
     typeOfBook: 'unique',
     createdAt: new Date(),
   }]

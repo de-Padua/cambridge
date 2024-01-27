@@ -24,12 +24,24 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import { Textarea } from "@/components/ui/textarea"
+import { Textarea } from "@/components/ui/textarea";
 
 import { Label } from "@/components/ui/label";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import Link from "next/link";
-
+import { useState } from "react";
+import { Badge } from "@/components/ui/badge";
+import { useRef } from "react";
+import { Cross1Icon, PlusIcon } from "@radix-ui/react-icons";
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+} from "@/components/ui/dialog";
+import { UserBookProps } from "@/types";
 const formSchema = z.object({
   Title: z.string().min(2, {
     message: "Title must be at least 2 characters.",
@@ -48,7 +60,11 @@ const formSchema = z.object({
     }),
 });
 
-export function BookForm() {
+export function BookForm({defaultData} : {defaultData: UserBookProps | null}) {
+  const [tags, setTag] = useState<string[]>([]);
+ 
+
+  const tagRef = useRef(null);
   const bookCategories: { title: string; href: string }[] = [
     { title: "Fiction", href: "/category/fiction" },
     { title: "Mystery & Thriller", href: "/category/mystery-thriller" },
@@ -66,8 +82,11 @@ export function BookForm() {
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
-      Title: "",
-      category: "Choose one category",
+      Title:defaultData?.title,
+      category: defaultData?.category.title,
+      synopisis:defaultData?.synopisis,
+      type:defaultData?.typeOfBook
+
     },
   });
 
@@ -77,6 +96,17 @@ export function BookForm() {
     // ✅ This will be type-safe and validated.
     console.log(values);
   }
+
+  const handleAddNewTag = () => {
+    //set tags to the array state
+
+    if (tagRef.current!.value === "") return;
+
+    setTag((oldValue) => [...oldValue, tagRef.current!.value]);
+
+    //clean the input
+    tagRef.current.value = "";
+  };
 
   return (
     <div className=" ">
@@ -91,7 +121,7 @@ export function BookForm() {
                 <FormControl>
                   <Input {...field} />
                 </FormControl>
-           
+
                 <FormMessage />
               </FormItem>
             )}
@@ -154,25 +184,83 @@ export function BookForm() {
               </FormItem>
             )}
           />
-           <FormField
-          control={form.control}
-          name="synopisis"
-          render={({ field }) => (
-            <FormItem>
-              <FormLabel>Bio</FormLabel>
-              <FormControl>
-                <Textarea
-                  placeholder="Tell us about your history"
-                  className="resize-none min-h-40"
-                  {...field}
-                />
-              </FormControl>
-             
-              <FormMessage />
-            </FormItem>
-          )}
-        />
-          <Button type="submit">Submit</Button>
+
+          <div className="my-1 ">
+            <FormLabel>Tags</FormLabel>
+            <div className="flex items-center justify-start  ">
+              <div className="flex items-center justify-start flex-wrap ">
+                {defaultData?.tags?.map((i) => {
+                  return (
+                    <Badge className="text-xs  cursor-pointer mr-1">{i.title}</Badge>
+                  );
+                })}
+                <Dialog>
+                  <DialogTrigger className="m-0 p-0">
+                    <Badge
+                      className="text-xs p-1 cursor-pointer "
+                      variant={"secondary"}
+                    >
+                      <PlusIcon className="mr-1" /> Add tag
+                    </Badge>
+                  </DialogTrigger>
+                  <DialogContent className="w-1/3">
+                    <DialogHeader>
+                      <DialogTitle>Add tags for your book</DialogTitle>
+                      <DialogDescription>
+                        <div>
+                          <h2 className="py-2 ">Current tags</h2>
+                          <div className=" flex items-center justify-start flex-wrap ">
+                            {tags?.map((i) => {
+                              return (
+                                <Badge className="text-xs p-1 cursor-pointer mr-1 ">
+                                  {i}
+                                  <Cross1Icon className="h-3 w-3 ml-1 " />
+                                </Badge>
+                              );
+                            })}
+                          </div>
+                        </div>
+                        <div className="w-full my-2 space-y-2 ">
+                          <Input type="text" ref={tagRef} />
+                          <Button
+                            size={"sm"}
+                            variant={"outline"}
+                            onClick={() => {
+                              handleAddNewTag();
+                            }}
+                          >
+                            Add new tag
+                          </Button>
+                        </div>
+                      </DialogDescription>
+                    </DialogHeader>
+                  </DialogContent>
+                </Dialog>
+              </div>
+            </div>
+          </div>
+
+          <FormField
+            control={form.control}
+            name="synopisis"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>Synopisis</FormLabel>
+                <FormControl>
+                  <Textarea
+                    placeholder="Tell us about your history"
+                    className="resize-none min-h-40"
+                    {...field}
+                  />
+                </FormControl>
+
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+
+
+          <Button type="submit" variant={'outline'}>Submit  </Button>
         </form>
       </Form>
     </div>

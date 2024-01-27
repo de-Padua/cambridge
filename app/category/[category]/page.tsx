@@ -16,6 +16,7 @@ import { Badge } from "@/components/ui/badge";
 
 function page({ params }: { params: { category: string } }) {
   const whimsicalJourneyBook: UserBookProps[] = [{
+    finished:false,
     title: "The Whimsical Journey of Oliver",
     author: "Your Name",
     category: { title: "Fantasy", id: "fantasy123" },
@@ -47,7 +48,7 @@ function page({ params }: { params: { category: string } }) {
         `,
       },
     ],
-    sinopisis: "Join Oliver on a whimsical journey through meadows, libraries, and enchanted realms as he discovers the magic woven into the fabric of his town.",
+    synopisis: "Join Oliver on a whimsical journey through meadows, libraries, and enchanted realms as he discovers the magic woven into the fabric of his town.",
     typeOfBook: 'unique',
     createdAt: new Date(),
   }]
@@ -67,8 +68,8 @@ function page({ params }: { params: { category: string } }) {
             {whimsicalJourneyBook.map((card) => {
               return (
                 <Card
-                  
-                sinopisis={card.sinopisis}
+                finished={card.finished}
+                synopisis={card.synopisis}
                 chapters={card.chapters}
                 typeOfBook={card.typeOfBook}
                 createdAt={card.createdAt}

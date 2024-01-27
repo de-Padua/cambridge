@@ -42,7 +42,7 @@ export default function DropdownMenuDemo() {
         <NavMenu />
       </div>
       <div className="  w-5/12 flex items-center justify-center space-x-2">
-      <Link href="/docs" legacyBehavior passHref>
+      <Link href="/book/new" legacyBehavior passHref>
               <Button size={"sm"}>Write a new history</Button>
           </Link>
       <Input type="text" placeholder="Search some history"  className="w-1/2 bg-white" />
@@ -51,25 +51,27 @@ export default function DropdownMenuDemo() {
         <DropdownMenuTrigger asChild className="bg-white">
           <div className="flex items-center justify-between w-fit space-x-2 border rounded-md  p-2 py-1 cursor-pointer ">
             <Avatar className="h-6 w-6">
-              <AvatarImage src="https://github.com/shadcn.png" />
+              <AvatarImage src="https://avatars.githubusercontent.com/u/106854024?v=4" />
               <AvatarFallback>CN</AvatarFallback>
             </Avatar>
             <h2 className="text-xs font-semibold">Antônio de Pádua</h2>
           </div>
         </DropdownMenuTrigger>
         <DropdownMenuContent className="w-56 ">
-          <DropdownMenuLabel>My Account</DropdownMenuLabel>
+          <DropdownMenuLabel >My Account</DropdownMenuLabel>
           <DropdownMenuSeparator />
           <DropdownMenuGroup>
-            <DropdownMenuItem>
+          <Link href={`/profile/${"tonyst"}`}>  <DropdownMenuItem >
               Profile
               <DropdownMenuShortcut><PersonIcon/></DropdownMenuShortcut>
-            </DropdownMenuItem>
+            </DropdownMenuItem></Link>
             
+            <Link href={'/user/settings'}>
             <DropdownMenuItem>
               Settings
               <DropdownMenuShortcut><GearIcon /></DropdownMenuShortcut>
             </DropdownMenuItem>
+            </Link>
          
           </DropdownMenuGroup>
           <DropdownMenuSeparator />

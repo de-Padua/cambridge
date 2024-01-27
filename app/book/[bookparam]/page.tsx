@@ -1,13 +1,19 @@
 "use client";
 import { Badge } from "@/components/ui/badge";
-import { Button } from "@/components/ui/button";
 import { UserBookProps } from "@/types";
+import { Button } from "@/components/ui/button";
 import {
   DropdownMenu,
   DropdownMenuContent,
+  DropdownMenuGroup,
   DropdownMenuItem,
   DropdownMenuLabel,
+  DropdownMenuPortal,
   DropdownMenuSeparator,
+  DropdownMenuShortcut,
+  DropdownMenuSub,
+  DropdownMenuSubContent,
+  DropdownMenuSubTrigger,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import {
@@ -20,6 +26,7 @@ import {
 import {
   BookmarkFilledIcon,
   CalendarIcon,
+  CardStackMinusIcon,
   EyeOpenIcon,
   LockOpen1Icon,
   StarIcon,
@@ -34,12 +41,14 @@ import React, { useEffect, useState } from "react";
 import { Avatar, AvatarFallback, AvatarImage } from "@radix-ui/react-avatar";
 import { ScrollArea } from "@radix-ui/react-scroll-area";
 import Image from "next/image";
+import BookHeader from "@/components/home/header";
 
 function page({ params }: { params: { bookparam: string } }) {
   const [currentIndex, setCurrentIndex] = useState(0);
   const [totalReadingTime, setTotalReadingTime] = useState<number | null>(null);
 
   const book: UserBookProps = {
+    finished: false,
     title: "The Whimsical Journey",
     author: "Antônio de Pádua da Silva Alves.",
     category: { title: "Fantasy", id: "fantasy123" },
@@ -138,8 +147,9 @@ function page({ params }: { params: { bookparam: string } }) {
         `,
       },
     ],
-    sinopisis:
-      "Join Oliver on a whimsical journey through meadows, libraries, and enchanted realms as he discovers the magic woven into the fabric of his town.",
+    synopisis:
+      "Join Oliver on a whimsical journey through meadows, libraries, and enchanted realms Join Oliver on a whimsical journey through meadows, libraries, and enchanted realms as he discovers the magic woven into the fabric of his town. Join Oliver on a whimsical journey through meadows, libraries, and enchanted realms as he discovers the magic woven into the fabric of his town.Join Oliver on a whimsical journey through meadows, libraries, and enchanted realms as he discovers the magic woven into the fabric of his town.Join Oliver on a whimsical journey through meadows, libraries, and enchanted realms as he discovers the magic woven into the fabric of his town.as he discovers the magic woven into the fabric of his town.",
+      
     typeOfBook: "unique",
     createdAt: new Date(),
   };
@@ -174,97 +184,51 @@ function page({ params }: { params: { bookparam: string } }) {
   return (
     <div className="w-full h-full flex items-start justify-center  ">
       <div className="w-full  h-full flex justify-center items-center flex-col ">
-        <div className="w-full h-full flex justify-center items-center border-b bg-accent py-20 ">
-          <div className=" mx-6 h-full flex items-center justify-center ">
-          <Image
-                src={
-                  "http://www.casualoptimist.com/wp-content/uploads/2022/03/dolariad-design-luke-bird-978x1500.jpg"
-                }
-                alt="historie image cover"
-                width={160}
-                height={100}
-                className=" "
-              />
-          </div>
-          <div className="w-1/2  justify-self-start h-full flex items-start justify-center flex-col ">
-          
-            <h2 className="text-5xl font-semibold py-2">{book.title}</h2>
-            <p className="text-sm ">{book.sinopisis}</p>
-
-            <div className="flex items-center justify-start space-x-2">
+        <BookHeader book={book}/>
+        <div className="w-full h-14 bg-white border-b sticky top-0 flex items-center justify-center">
+          <DropdownMenu>
+            <DropdownMenuTrigger asChild>
+              <Button variant="outline">Book content</Button>
+            </DropdownMenuTrigger>
+            <DropdownMenuContent className="w-56">
+              <DropdownMenuLabel>Chapters</DropdownMenuLabel>
+              <DropdownMenuSeparator />
+              <DropdownMenuGroup>
+                
+               {book.chapters.map((item,index) =>{
+              return  <DropdownMenuItem onClick={()=>{
+                setCurrentIndex(index)
+              }}>
+                   Chapter {index + 1} 
+              </DropdownMenuItem>
+               })}
+              </DropdownMenuGroup>
+              <DropdownMenuSeparator />
               
-              <HoverCard>
-                <HoverCardTrigger asChild className="p-0 py-1 mt-1">
-                  <Button
-                    variant="link"
-                    className="py-1 textsnm
-        "
-                  >
-                    {book.author}
-                  </Button>
-                </HoverCardTrigger>
-                <HoverCardContent className="w-80">
-                  <div className="flex justify-between space-x-4">
-                    <Avatar className="w-1/3">
-                      <AvatarImage src="https://avatars.githubusercontent.com/u/106854024?v=4" />
-                      <AvatarFallback>VC</AvatarFallback>
-                    </Avatar>
-                    <div className="space-y-1">
-                      <h4 className="text-sm font-semibold">{book.author}</h4>
-                      <p className="text-sm">I do histories</p>
-                      <div className="flex items-center pt-2">
-                        <CalendarIcon className="mr-2 h-4 w-4 opacity-70" />{" "}
-                        <span className="text-xs text-muted-foreground">
-                          Joined December 2023
-                        </span>
-                      </div>
-                    </div>
-                  </div>
-                </HoverCardContent>
-              </HoverCard>
-              <div className="">
-                <Badge className="bg-white"variant={"outline"}>
-                  {book.typeOfBook}
-                  <EyeOpenIcon className=" ml-1" />
-                </Badge>
-              </div>
-              <div className="">
-                <Badge className="bg-white"variant={"outline"}>
-                  {book.views}
-                  <EyeOpenIcon className=" ml-1" />
-                </Badge>
-              </div>
-              <div className="">
-                <Badge className="bg-white" variant={"outline"}>
-                  {book.favorites.length}
-                  <StarIcon className=" ml-1" />
-                </Badge>
-              </div>
-              <div className="">
-                <Badge className="bg-white" variant={"outline"}>
-                  {book.category.title}
-                  <BookmarkFilledIcon className=" ml-1" />
-                </Badge>
-              </div>
-              <div>
-                {totalReadingTime === null ? (
-                  "..."
-                ) : (
-                  <p className="text-sm mt-1">{totalReadingTime} min read. </p>
-                )}
-              </div>
-            </div>
-            <div>
-              {book.tags.map(item =>{
-                return <Badge className="mr-1">{item.title}</Badge>
-              })}
-            </div>
+              
+              <DropdownMenuItem>
+                 Add to favorites
+                <DropdownMenuShortcut><StarIcon /></DropdownMenuShortcut>
+              </DropdownMenuItem>
+            </DropdownMenuContent>
+          </DropdownMenu>
+
+          <div>
+          <div className="flex items-center justify-center space-x-2 px-2">
+          <h4 className=" text-1xl font-semibold">
+                {book.chapters[currentIndex].title}
+              </h4>
+              <p className="text-sm">
+                {calculateReadingTime(book.chapters[currentIndex].text)} min
+                read.
+              </p>
+          </div>
           </div>
         </div>
         <div className="w-1/2 my-5">
           <div className="h-fit  min-h-screen">
             <div className="my-5">
-            <h1 className=" text-3xl font-semibold my-2 ">
+              <h1 className=" text-3xl font-semibold my-2 ">
                 Chapter {currentIndex + 1}
               </h1>
               <h4 className=" text-2xl font-semibold">
@@ -277,6 +241,7 @@ function page({ params }: { params: { bookparam: string } }) {
               </p>
             </div>
             <div
+              
               dangerouslySetInnerHTML={{
                 __html: book.chapters[currentIndex].text,
               }}
@@ -290,19 +255,21 @@ function page({ params }: { params: { bookparam: string } }) {
                   }}
                 >
                   Read previous chapter
-                  
                 </Button>
-              ) : <>.</>}
-              {
-                currentIndex === book.chapters.length - 1
-                 ? "" :  <Button
-                onClick={() => {
-                  setCurrentIndex((oldvalue) => oldvalue + 1);
-                }}
-              >
-                Read next chapter
-              </Button>
-              }
+              ) : (
+                <>.</>
+              )}
+              {currentIndex === book.chapters.length - 1 ? (
+                ""
+              ) : (
+                <Button
+                  onClick={() => {
+                    setCurrentIndex((oldvalue) => oldvalue + 1);
+                  }}
+                >
+                  Read next chapter
+                </Button>
+              )}
             </div>
           </div>
         </div>
