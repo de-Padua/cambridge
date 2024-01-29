@@ -26,6 +26,7 @@ import { ScrollArea } from "@/components/ui/scroll-area";
 import Link from "next/link";
 
 function CarouselCard({
+  bookCoverUrl,
   title,
   author,
   preface,
@@ -54,7 +55,7 @@ function CarouselCard({
           </div>
           <Image
             src={
-              "http://www.casualoptimist.com/wp-content/uploads/2022/03/dolariad-design-luke-bird-978x1500.jpg"
+              bookCoverUrl
             }
             alt="historie image cover"
             width={350}
@@ -81,12 +82,12 @@ function CarouselCard({
             >
               <Image
                 src={
-                  "http://www.casualoptimist.com/wp-content/uploads/2022/03/dolariad-design-luke-bird-978x1500.jpg"
+                  bookCoverUrl
                 }
                 alt="historie image cover"
-                width={350}
+                width={353}
                 height={390}
-                className="aspect-[2/3] object-cover"
+                className="aspect-[2/3] object-contain"
               />
             </div>
             <div className="w-8/12 h-full space-y-5 p-10   ">

@@ -4,7 +4,7 @@ export interface UserBookProps {
   category: category;
   views: number;
   preface: string;
-
+  bookCoverUrl:string
   favorites: { id: string; userName: string }[];
 
   tags: {
@@ -35,8 +35,10 @@ export type tag = {
 
 
 export type User = {
-  name:string,
+  username:string,
   email:string,
+  photoUrl:string
+  id:string
   books:UserBookProps[] | [],
   favorites:UserBookProps[] | [],
   bio:string,

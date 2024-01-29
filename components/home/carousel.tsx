@@ -44,6 +44,7 @@ export function CarouselMain({cardData}:CarouselMainProps) {
           : sortedArray.map((card, index) => (
               <CarouselItem key={index} className="md:basis-1/3 lg:basis-1/2 w-full">
                 <CustomCard
+                bookCoverUrl={card.bookCoverUrl}
                 finished={card.finished}
                  synopisis={card.synopisis}
                  chapters={card.chapters}

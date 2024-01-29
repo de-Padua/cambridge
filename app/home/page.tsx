@@ -10,6 +10,7 @@ import Section from "@/components/home/section";
 function page() {
   const whimsicalJourneyBook: UserBookProps[] = [{
     finished:false,
+    bookCoverUrl:"",
     title: "The Whimsical Journey of Oliver",
     author: "Your Name",
     category: { title: "Fantasy", id: "fantasy123" },

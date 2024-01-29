@@ -1,11 +1,11 @@
 "use client";
-
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
 import { Separator } from "@radix-ui/react-dropdown-menu";
 import Image from "next/image";
 import { Button } from "@/components/ui/button";
-import { useState } from "react";
+import { ChangeEvent, useState } from "react";
 import { SelectContent } from "@radix-ui/react-select";
-import { DotIcon } from "@radix-ui/react-icons";
+import { CameraIcon, DotIcon, PlusCircledIcon } from "@radix-ui/react-icons";
 import { User } from "@/types";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
@@ -33,8 +33,10 @@ const formSchema = z.object({
 });
 
 const user: User = {
-  name: "John Doe",
+  username: "John Doe",
   email: "john@example.com",
+  photoUrl: "https://avatars.githubusercontent.com/u/106854024?v=4",
+  id: "11",
   books: [],
   favorites: [],
   bio: "I am a passionate writer who loves to explore various genres.",
@@ -45,12 +47,17 @@ const user: User = {
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Textarea } from "@/components/ui/textarea";
 import ImageUpload from "@/components/forms/new-book/image";
+import { Label } from "@/components/ui/label";
+import { File } from "buffer";
 
 export default function page() {
+  const [imagePreview, setImagePreview] = useState<string | null>(
+    user.photoUrl
+  );
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
-      username: user.name,
+      username: user.username,
       bio: user.bio,
       urls: user.urls.value,
     },
@@ -63,6 +70,14 @@ export default function page() {
     console.log(values);
   }
 
+  const handlePreview = (e: ChangeEvent<HTMLInputElement>) => {
+    if (e.target.files) {
+      const file = e.target.files[0];
+      const imageUrl = URL.createObjectURL(file);
+      setImagePreview(imageUrl);
+    }
+  };
+
   return (
     <>
       <div className="w-full flex items-center justify-center">
@@ -70,11 +85,30 @@ export default function page() {
           <div className="space-y-0.5">
             <h2 className="text-2xl font-bold tracking-tight">Settings</h2>
             <p className="text-muted-foreground">
-              Manage your account settings and set e-mail preferences.
+              Manage your account settings.
             </p>
           </div>
 
-          <Separator className="my-6" />
+          <Separator className="my-6 " />
+          <div className="  w-full my-2">
+            <Label>
+              Profile picture
+              {imagePreview && (
+                <Avatar className="w-40 h-40 my-2 border shadow-sm relative flex items-center justify-center">
+                <AvatarImage src={imagePreview} className="w-full cursor-pointer hover:bg-slate-200" />
+               
+              </Avatar>
+
+              )}
+              <Input
+                
+                accept=".JPG"
+                type="file"
+                className="border-none shadow-none hidden"
+                onChange={handlePreview}
+              />
+            </Label>
+          </div>
           <div className=" ">
             <Form {...form}>
               <form
